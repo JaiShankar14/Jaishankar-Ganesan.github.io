@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Jaishankar G | Robotics & AI Engineer</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0d0d14;
+    --bg2: #13131f;
+    --card: #1a1a2e;
+    --border: rgba(255,255,255,0.08);
+    --text: #e8e8f0;
+    --muted: #8888aa;
+    --accent: #7c6ff7;
+    --accent2: #1dcfa1;
+    --accent3: #f07c5b;
+    --pill-bg: rgba(124,111,247,0.15);
+    --pill-color: #a89ef9;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: rgba(13,13,20,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 60px;
+  }
+  .nav-logo { font-weight: 700; font-size: 18px; color: var(--accent); letter-spacing: 0.5px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; transition: color .2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
+    text-align: center;
+    padding: 80px 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(124,111,247,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,111,247,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-glow {
+    position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+    width: 500px; height: 300px;
+    background: radial-gradient(ellipse, rgba(124,111,247,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .avatar {
+    width: 110px; height: 110px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px; font-weight: 700; color: #fff;
+    margin: 0 auto 1.5rem; position: relative; z-index: 1;
+    border: 3px solid rgba(124,111,247,0.4);
+  }
+  .hero-tag {
+    background: var(--pill-bg); color: var(--pill-color);
+    font-size: 12px; padding: 4px 14px; border-radius: 20px;
+    border: 1px solid rgba(124,111,247,0.25);
+    margin-bottom: 1.2rem; display: inline-block; position: relative; z-index: 1;
+  }
+  h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; position: relative; z-index: 1; line-height: 1.2; margin-bottom: .6rem; }
+  .hero-sub { color: var(--muted); font-size: 1.05rem; max-width: 540px; position: relative; z-index: 1; margin-bottom: 2rem; }
+  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    border: none; padding: 10px 24px; border-radius: 8px;
+    font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none;
+    transition: opacity .2s;
+  }
+  .btn-primary:hover { opacity: .85; }
+  .btn-outline {
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border); padding: 10px 24px; border-radius: 8px;
+    font-size: 14px; cursor: pointer; text-decoration: none;
+    transition: border-color .2s, color .2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; max-width: 960px; margin: 0 auto; }
+  .section-label { color: var(--accent); font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: .6rem; }
+  h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 2.5rem; }
+  .divider { height: 1px; background: var(--border); max-width: 960px; margin: 0 auto; }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+  .about-text p { color: var(--muted); margin-bottom: 1rem; font-size: 15px; }
+  .about-details { display: flex; flex-direction: column; gap: .75rem; }
+  .detail-row { display: flex; gap: .75rem; align-items: flex-start; }
+  .detail-icon { color: var(--accent2); font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+  .detail-label { font-size: 12px; color: var(--muted); }
+  .detail-value { font-size: 14px; color: var(--text); font-weight: 500; }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; }
+  .skill-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem;
+  }
+  .skill-card h3 { font-size: 13px; color: var(--accent); font-weight: 600; margin-bottom: 1rem; letter-spacing: .5px; text-transform: uppercase; }
+  .skill-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill {
+    background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+    color: var(--muted); font-size: 12px; padding: 4px 10px; border-radius: 6px;
+  }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .project-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1.5rem;
+    transition: border-color .2s, transform .2s;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .project-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-bottom: 1rem;
+  }
+  .project-card h3 { font-size: 15px; font-weight: 600; margin-bottom: .5rem; }
+  .project-card p { font-size: 13px; color: var(--muted); margin-bottom: 1rem; line-height: 1.55; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { background: var(--pill-bg); color: var(--pill-color); font-size: 11px; padding: 3px 8px; border-radius: 5px; }
+
+  /* EXPERIENCE */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: ''; position: absolute; left: 7px; top: 4px; bottom: 0;
+    width: 2px; background: var(--border);
+  }
+  .tl-item { position: relative; margin-bottom: 2.5rem; }
+  .tl-dot {
+    position: absolute; left: -2rem; top: 4px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--accent); border: 2px solid var(--bg);
+  }
+  .tl-date { font-size: 12px; color: var(--accent2); font-weight: 500; margin-bottom: .25rem; }
+  .tl-title { font-size: 15px; font-weight: 600; margin-bottom: .2rem; }
+  .tl-company { font-size: 13px; color: var(--muted); margin-bottom: .6rem; }
+  .tl-bullets { list-style: none; padding: 0; }
+  .tl-bullets li { font-size: 13px; color: var(--muted); padding: .2rem 0 .2rem 1rem; position: relative; line-height: 1.5; }
+  .tl-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); font-size: 11px; top: 3px; }
+
+  /* EDUCATION */
+  .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
+  .edu-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem 1.5rem;
+  }
+  .edu-degree { font-size: 14px; font-weight: 600; margin-bottom: .3rem; }
+  .edu-school { font-size: 13px; color: var(--accent); margin-bottom: .25rem; }
+  .edu-year { font-size: 12px; color: var(--muted); }
+
+  /* CERTIFICATIONS */
+  .cert-list { display: flex; flex-direction: column; gap: .75rem; }
+  .cert-item {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1rem 1.25rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .cert-badge {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--pill-bg); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .cert-name { font-size: 14px; font-weight: 500; }
+  .cert-org { font-size: 12px; color: var(--muted); }
+
+  /* CONTACT */
+  .contact-box {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 3rem 2rem; text-align: center;
+  }
+  .contact-box p { color: var(--muted); margin-bottom: 2rem; max-width: 440px; margin-left: auto; margin-right: auto; }
+  .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .contact-link {
+    background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+    color: var(--text); text-decoration: none; padding: 10px 20px;
+    border-radius: 8px; font-size: 13px; font-weight: 500;
+    display: flex; align-items: center; gap: 8px; transition: border-color .2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 2rem; font-size: 13px;
+    color: var(--muted); border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 640px) {
+    .about-grid { grid-template-columns: 1fr; }
+    nav { padding: 0 1rem; }
+    .nav-links { gap: 1rem; }
+    section { padding: 3.5rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">JG</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="avatar">JG</div>
+  <div class="hero-tag">Open to Graduate Opportunities in the UK</div>
+  <h1>Jaishankar G</h1>
+  <p class="hero-sub">MSc Robotics &amp; AI · ECE Engineer · Data Scientist<br>Building intelligent systems at the intersection of hardware and AI.</p>
+  <div class="hero-btns">
+    <a href="#projects" class="btn-primary">View Projects</a>
+    <a href="#contact" class="btn-outline">Get in Touch</a>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">About Me</div>
+  <h2>Who I am</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I am an enthusiastic engineering professional currently pursuing an MSc in Robotics with Artificial Intelligence at London Metropolitan University. With a background in Electronics and Communication Engineering (specialised in Data Science) from SRM University, I combine hardware knowledge with AI-driven software skills.</p>
+      <p>I have hands-on experience in embedded systems, machine learning, computer vision, and data analysis — and I am passionate about building impactful, real-world solutions at the frontier of robotics and AI.</p>
+    </div>
+    <div class="about-details">
+      <div class="detail-row">
+        <div class="detail-icon">&#127968;</div>
+        <div>
+          <div class="detail-label">Location</div>
+          <div class="detail-value">London, United Kingdom</div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon">&#127891;</div>
+        <div>
+          <div class="detail-label">Education</div>
+          <div class="detail-value">MSc Robotics &amp; AI, London Metropolitan University (2025–2026)</div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon">&#128222;</div>
+        <div>
+          <div class="detail-label">Phone</div>
+          <div class="detail-value">+44 7818 055817</div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon">&#128231;</div>
+        <div>
+          <div class="detail-label">Email</div>
+          <div class="detail-value">shankar141022@gmail.com</div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon">&#128196;</div>
+        <div>
+          <div class="detail-label">Publication</div>
+          <div class="detail-value">International Conference on Communication Networks &amp; AI (May 2024)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Technical Skills</div>
+  <h2>What I work with</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <h3>Languages</h3>
+      <div class="skill-pills">
+        <span class="pill">Python</span><span class="pill">C</span><span class="pill">SQL</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h3>Hardware &amp; Embedded</h3>
+      <div class="skill-pills">
+        <span class="pill">Arduino</span><span class="pill">ESP32</span>
+        <span class="pill">8086 MCU</span><span class="pill">8051 MCU</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h3>AI / ML</h3>
+      <div class="skill-pills">
+        <span class="pill">Machine Learning</span><span class="pill">Deep Learning</span>
+        <span class="pill">Computer Vision</span><span class="pill">OpenCV</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h3>Tools &amp; Platforms</h3>
+      <div class="skill-pills">
+        <span class="pill">Power BI</span><span class="pill">MATLAB</span>
+        <span class="pill">AutoCAD</span><span class="pill">LTSpice</span>
+        <span class="pill">Azure</span><span class="pill">MySQL</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h3>Networking &amp; Integration</h3>
+      <div class="skill-pills">
+        <span class="pill">REST API</span><span class="pill">Cisco Packet Tracer</span>
+        <span class="pill">Data Mining</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h3>Simulation</h3>
+      <div class="skill-pills">
+        <span class="pill">Xilinx</span><span class="pill">MATLAB Simulink</span>
+        <span class="pill">LTSpice</span>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Projects</div>
+  <h2>What I've built</h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-icon" style="background:rgba(124,111,247,0.15);">&#129302;</div>
+      <h3>5-DOF Robotic Micro Arm</h3>
+      <p>Designed and built a 5-DOF robotic arm using 3D-printed parts, servo motors, and an ESP32 controller with Wi-Fi-based remote control via a web interface. Implemented inverse kinematics and smooth path planning.</p>
+      <div class="project-tags">
+        <span class="tag">ESP32</span><span class="tag">Inverse Kinematics</span>
+        <span class="tag">3D Printing</span><span class="tag">Embedded C</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon" style="background:rgba(29,207,161,0.15); color: #1dcfa1;">&#129504;</div>
+      <h3>AI Search &amp; Planning for Robotics</h3>
+      <p>Implemented BFS, DFS, and A* search algorithms with state-space modelling for autonomous robotic navigation, route planning, and task scheduling in constraint-based environments.</p>
+      <div class="project-tags">
+        <span class="tag">A* Algorithm</span><span class="tag">Python</span>
+        <span class="tag">AI Planning</span><span class="tag">Robotics</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon" style="background:rgba(240,124,91,0.15); color:#f07c5b;">&#128065;</div>
+      <h3>Hybrid CNN Licence Plate Detection</h3>
+      <p>Developed a hybrid CNN framework combining Haar Cascade detection with a CNN classifier for automatic licence plate recognition — energy-efficient and suitable for smart city deployment.</p>
+      <div class="project-tags">
+        <span class="tag">CNN</span><span class="tag">OpenCV</span>
+        <span class="tag">Deep Learning</span><span class="tag">Python</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon" style="background:rgba(55,138,221,0.15); color:#378add;">&#9889;</div>
+      <h3>Off-Board EV Charger (Published)</h3>
+      <p>Designed and simulated an off-board EV charger using Zeta-Flyback converters with an optimal controller in MATLAB Simulink, achieving efficient power transfer and improved transient response. Published at an international conference.</p>
+      <div class="project-tags">
+        <span class="tag">MATLAB</span><span class="tag">Power Electronics</span>
+        <span class="tag">Control Systems</span><span class="tag">Published</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon" style="background:rgba(99,153,34,0.15); color:#63991a;">&#128663;</div>
+      <h3>Drunk Drive Detection (IoT)</h3>
+      <p>Built an IoT-based security system that prevents motorbike ignition if a rider is not wearing a helmet or exceeds a threshold alcohol level, using Microcontroller 8051 and sensors.</p>
+      <div class="project-tags">
+        <span class="tag">IoT</span><span class="tag">Microcontroller 8051</span>
+        <span class="tag">Sensors</span><span class="tag">Java</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Experience</div>
+  <h2>Where I've worked</h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">Jun 2024 – May 2025</div>
+      <div class="tl-title">Associate Consultant</div>
+      <div class="tl-company">Tickmarks Technology and Risk Consulting · Chennai, India</div>
+      <ul class="tl-bullets">
+        <li>Performed data analysis using Power BI, MySQL, and Microsoft Azure to deliver actionable business insights.</li>
+        <li>Collaborated with cross-functional teams to design efficient data solutions ensuring accuracy in decision-making.</li>
+        <li>Supported API integrations and enhanced technical documentation to improve data accessibility.</li>
+        <li>Leveraged Python for automation and data processing, streamlining workflows and productivity.</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">Jun – Jul 2023</div>
+      <div class="tl-title">Part-Time Intern – Robotics &amp; IoT</div>
+      <div class="tl-company">Externs Technology · Bengaluru, India</div>
+      <ul class="tl-bullets">
+        <li>Trained in IoT and Robotics fundamentals with live demonstrations and self-paced modules.</li>
+        <li>Gained hands-on experience with Arduino UNO, Microcontrollers, and AutoCAD for robot design.</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background: var(--accent2);"></div>
+      <div class="tl-date">Dec 2025 – Present</div>
+      <div class="tl-title">Team Member (Part-Time)</div>
+      <div class="tl-company">Greggs · Reading, UK</div>
+      <ul class="tl-bullets">
+        <li>Supporting daily store operations, food preparation, hygiene standards, and customer service.</li>
+        <li>Strengthened communication, teamwork, and time management skills in a fast-paced environment.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">Education</div>
+  <h2>Academic Background</h2>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-degree">MSc Robotics with Artificial Intelligence</div>
+      <div class="edu-school">London Metropolitan University, UK</div>
+      <div class="edu-year">2025 – 2026 (Expected)</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">B.Tech in ECE – Specialisation: Data Science</div>
+      <div class="edu-school">SRM University, Chennai</div>
+      <div class="edu-year">2021 – 2024 · CGPA: 7.58</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Diploma in Electrical &amp; Electronics Engineering</div>
+      <div class="edu-school">Valliammai Polytechnic College</div>
+      <div class="edu-year">2018 – 2021 · 81%</div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- CERTIFICATIONS -->
+<section id="certs">
+  <div class="section-label">Certifications</div>
+  <h2>Credentials</h2>
+  <div class="cert-list">
+    <div class="cert-item">
+      <div class="cert-badge">&#127891;</div>
+      <div>
+        <div class="cert-name">How to Get Into Robotics</div>
+        <div class="cert-org">University of Leeds · Jan 2026</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-badge">&#129302;</div>
+      <div>
+        <div class="cert-name">5-Day AI Agents Intensive Course with Google</div>
+        <div class="cert-org">Kaggle · Jan 2026</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-badge">&#129504;</div>
+      <div>
+        <div class="cert-name">Robotics and Artificial Intelligence</div>
+        <div class="cert-org">Great Learning · Feb 2024 – Mar 2025</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-badge">&#128202;</div>
+      <div>
+        <div class="cert-name">Data Mining</div>
+        <div class="cert-org">Great Learning · Apr – May 2023</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-badge">&#128187;</div>
+      <div>
+        <div class="cert-name">AI with Jetson Nano</div>
+        <div class="cert-org">NVIDIA Deep Learning Institute · Feb – Apr 2023</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-badge">&#128218;</div>
+      <div>
+        <div class="cert-name">Python for Data Science, AI &amp; Development</div>
+        <div class="cert-org">Coursera – IBM Authorized · Sep 2022 – Nov 2023</div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Contact</div>
+  <h2>Get in touch</h2>
+  <div class="contact-box">
+    <p>I am actively looking for graduate engineering roles in the UK in robotics, AI, or data engineering. Feel free to reach out — I would love to connect!</p>
+    <div class="contact-links">
+      <a href="mailto:shankar141022@gmail.com" class="contact-link">&#128231; shankar141022@gmail.com</a>
+      <a href="tel:+447818055817" class="contact-link">&#128222; +44 7818 055817</a>
+      <a href="https://www.linkedin.com/in/jaishankar-g-474002254/" target="_blank" class="contact-link">&#128279; LinkedIn</a>
+    </div>
+    <a href="mailto:shankar141022@gmail.com" class="btn-primary">Send me an email</a>
+  </div>
+</section>
+
+<footer>
+  &copy; 2026 Jaishankar G &mdash; Built with HTML, CSS &amp; passion for engineering.
+</footer>
+
+</body>
+</html>
